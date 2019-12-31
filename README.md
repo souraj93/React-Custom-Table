@@ -193,3 +193,110 @@ fullName: {
 }
 ```
 
+#### Props options
+Here are the list of options you can send via props to the table component. 
+
+1. If you want to hide the dropdown of the column heading list which is used to show or hide a column then you have to send **hideColumnDropdown** props to false. If you want to display the dropdown then set it to true.
+
+2. You have to send the **visibleColumns** props which is an array which consists with the values (only those column head which you want to display initially) of the head field of the headerFormat option. Make sure you initialize the **visibleColumns** to the state of the parent component.
+```
+visibleColumns: [
+       "User Name",
+       "Email",
+       "User Id",
+       "Status"
+]
+```
+3. You need to send the **handleColumnVisibilityChange** function as a props to the child component. The function is used to handle the column visibility by selecting the column heading from the dropdown of column headings. Also, the table width will be handled by selecting a column from the dropdown. The functionality of the function is as follows:
+```
+handleColumnVisibilityChange = event => {
+   let newState = { ...this.state };
+   if (event.target.value.length > this.minColumnLength) {
+     document.getElementById("custom_table").style.width =
+       document.getElementById("custom_table").clientWidth +
+       this.columnWidth +
+       "px";
+   } else {
+     document.getElementById("custom_table").style.width = "1000px";
+   }
+   newState.visibleColumns = event.target.value;
+   this.setState(newState);
+ };
+```
+4. You need to send the **sort** function as props to the child component which is used to handle the sorting within the columns. By default, multisort option is available in the table. You can also set the single sort by changing the logic in the following function.
+```
+handleSortClick = (option, header, index) => {
+   let newState = {
+     ...this.state
+   };
+   newState.headerFormat[header].option.forEach(element => {
+     element.isActive = false;
+   });
+   newState.headerFormat[header].option[index].isActive = true;
+  
+   this.setState(newState);
+   //After the above code you can call API to get the sorted data
+ };
+```
+5. **HeaderFormat** is the main props by which the table is created. I have already discussed different types of header format options above. Keep in mind, headerFormat must be set in the state of the parent component.  Here is a full example of it.
+```
+headerFormat: {
+       userId: {
+         head: "User Id",
+         key: "userId",
+         isLink:true,
+         linkTo:"/web/admin/auth/riders/details/",
+         paramName:"id"
+       },
+       fullName: {
+         head: "User Name",
+         key: "fullName",
+         sort: true,
+         option: [
+           {
+             type: -1,
+             isActive: false
+           },
+           {
+             type: 1,
+             isActive: false
+           }
+         ]
+       },
+       "personalInfo.email": {
+         head: "Email",
+         key: ["personalInfo", "email"],
+         populate: true
+       },
+       accountStatus: {
+         head: "Status",
+         key: "accountStatus",
+         status:true
+       },
+       createdAt: {
+         head: "Joining Date",
+         key: "createdAt"
+       }
+}
+```
+6. You have to send **rows** props for the data object. Keep in mind that, data object must be set in the state initially and data object should be as follows:
+```
+data: {
+       total: 10, // this is the total number of items present for the list i.e. total number of users present in the database
+       data: [] //this is the data array for the rows of the table
+}
+```
+7. You have to send **redirect** function which is used to redirect to the details page from the list page when the user clicks on any of the row of the list respective details will be fetched to this function of the parent component and you can redirect according to your need from this function.
+```
+redirect = data => {
+ this.props.history.push(`/user-details/${data.id}`);
+ };
+```
+8. If you want to display status as we discussed in the status section you have to send the **statusList** config object.
+```
+statusList = {
+   1: "Active",
+   2: "Inactive",
+   3: "Expired"
+ };
+```
