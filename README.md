@@ -1,6 +1,91 @@
 # React-Custom-Table
 If you want to display table data as well as sort, paginate the table data here is the solution.You can also show/ hide a column using this.You don't have to fetch all the table data at a time. You can use the pagination to fetch small number of lists at a time. 
 
+#### Calling child component from the parent component
+```
+<CustomTable
+     rows={this.state.data}
+     headerFormat={this.state.headerFormat}
+     sort={this.handleSortClick}
+     visibleColumns={this.state.visibleColumns}
+     redirect={this.redirect}
+     handleColumnVisibilityChange={
+        this.handleColumnVisibilityChange
+     }
+     statusList={this.statusList}
+/>
+```
+
+**Note:** Here Material-ui and react-paginate dependencies are used for the design purpose and pagination respectively. You can also use other pagination plugin if you want.
+Please ensure you have added the index.css content in your css file.
+```
+.table-header-wrapper {
+  -webkit-box-shadow: -8px 13px 8px -14px rgba(216, 216, 216, 0.75);
+  -moz-box-shadow: -8px 13px 8px -14px rgba(216, 216, 216, 0.75);
+  box-shadow: -8px 13px 8px -14px rgba(216, 216, 216, 0.75);
+}
+
+.table-header-wrapper th {
+  padding: 10px 18px 5px;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+.custom-table-body {
+  border-top: 1px solid #ccc;
+}
+
+//for pagination only
+.pagination {
+  list-style: none;
+  text-align: right;
+}
+
+.pagination li {
+  display: inline-block;
+  background-color: #fff;
+  color: #eb5c00;
+  padding: 0;
+  border: 1px solid #f5f5f5;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+}
+
+.pagination li:hover {
+  background: #eb5c00;
+  color: #fff;
+}
+
+.pagination .disabled,
+.pagination .disabled:hover {
+  background-color: #f1f0f0;
+  color: #a5a5a5;
+  cursor: default;
+}
+
+.pagination .previous {
+  border-radius: 3px;
+}
+
+.pagination .active {
+  background-color: #eb5c00;
+  color: #fff;
+}
+
+.pagination a {
+  padding: 8px 13px;
+  display: block;
+  font-size: 14px;
+}
+
+.pagination a:focus {
+  outline: none;
+}
+```
+
+
 #### State of the parent component
 ```
 state = {
@@ -196,7 +281,7 @@ fullName: {
 #### Props options
 Here are the list of options you can send via props to the table component. 
 
-1. If you want to hide the dropdown of the column heading list which is used to show or hide a column then you have to send **hideColumnDropdown** props to false. If you want to display the dropdown then set it to true.
+1. If you want to hide the dropdown of the column heading list which is used to show or hide a column then you have to send **hideColumnDropdown** props to true. By default its value is false.
 
 2. You have to send the **visibleColumns** props which is an array which consists with the values (only those column head which you want to display initially) of the head field of the headerFormat option. Make sure you initialize the **visibleColumns** to the state of the parent component.
 ```
@@ -300,3 +385,6 @@ statusList = {
    3: "Expired"
  };
 ```
+
+#### How to run
+Just download or clone the repository in your terminal. Go inside **React-Custom-Table** folder in the terminal. Type **npm install** to install the dependencies. After that, type the command **npm start or num run start**.
