@@ -387,4 +387,4 @@ statusList = {
 ```
 
 #### How to run
-Just download or clone the repository in your terminal. Go inside **React-Custom-Table** folder in the terminal. Type **npm install** to install the dependencies. After that, type the command **npm start or num run start**.
+Just download or clone the repository in your terminal. Go inside **React-Custom-Table** folder in the terminal. Type **npm install** to install the dependencies. After that, type the command **npm start or npm run start**.
